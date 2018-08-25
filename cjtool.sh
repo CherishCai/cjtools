@@ -58,8 +58,8 @@ freeCmd(){
 
 jinfoFlags(){
     # jinfo -flags $PID
-    echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') Begin to process jinfo -flags."
     JINFO_FLAGS_LOG=jinfo_flags-${PID}-${DATE}.log
+    echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') Begin to process jinfo -flags. write into $JINFO_FLAGS_LOG"
     jinfo -flags $PID 1>${JINFO_FLAGS_LOG} 2>&1
     if [[ $? != 0 ]]; then
       echo -e "\033[31mprocess jinfo -flags error.\033[0m"
@@ -69,9 +69,10 @@ jinfoFlags(){
 
 jmapHeap(){
     #jmap -heap
-    echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') Begin to process jmap -heap."
     JMAP_HEAP_LOG=jmap_heap-${PID}-${DATE}.log
-    jmap -heap $PID 1>${JMAP_HEAP_LOG} 2>&1
+    echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') Begin to process jmap -heap. write into $JMAP_HEAP_LOG"
+    
+    jmap -heap $PID > ${JMAP_HEAP_LOG}
     if [[ $? != 0 ]]; then
       echo -e "\033[31mprocess jmap -heap error.\033[0m"
     fi
@@ -80,8 +81,9 @@ jmapHeap(){
 
 jmapHisto(){
     # jmap -histo
-    echo -e "$(date '+%Y-%m-%d %H:%M:%S') Begin to process jmap -histo."
     JMAP_HISTO_LOG=jmap_histo-${PID}-${DATE}.log
+    echo -e "$(date '+%Y-%m-%d %H:%M:%S') Begin to process jmap -histo. write into $JMAP_HISTO_LOG"
+    
     jmap -histo $PID > ${JMAP_HISTO_LOG}
     if [[ $? != 0 ]]; then
         echo -e "\033[31mprocess jmap -histo error.\033[0m"
@@ -134,6 +136,15 @@ main(){
     echo "PID:$PID"
     echo "choice:$choice"
 
+    if [ 9 -eq $choice -o 8 -eq $choice ]; then
+        suggest
+    fi
+
+    if [ 9 -eq $choice -o 8 -ne $choice ]; then
+        # ne suggest
+        jinfoFlags
+    fi
+
     if [ 9 -eq $choice -o 1 -eq $choice ]; then
         topPid
         jstackPid
@@ -141,18 +152,14 @@ main(){
 
     if [ 9 -eq $choice -o 2 -eq $choice ]; then
         freeCmd
+
+        needFullGC
         
         jmapHisto
         jmapHeap
 
         needFullGC
     fi
-
-    if [ 9 -eq $choice -o 8 -eq $choice ]; then
-        suggest
-    fi
-    
-    jinfoFlags
 
     echo ""
     echo "End cjvmtools.sh"
