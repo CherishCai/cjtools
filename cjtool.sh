@@ -145,8 +145,9 @@ main(){
 
     if [ 9 -eq $choice -o 2 -eq $choice ]; then
         freeCmd
-        jmapHeap
+        
         jmapHisto
+        jmapHeap
 
         needFullGC
     fi
