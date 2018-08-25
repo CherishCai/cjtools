@@ -14,8 +14,8 @@ FREE=''
 JSTACK_LOG="/tmp/jstack-${PID}-${DATE}.jstack"
 
 psjava(){
-    PJ=`ps axu | grep -v grep | grep java`
-    echo -e "\n>>> ps axu | grep -v grep | grep java"
+    PJ=`ps axu | grep -v 'grep' | egrep 'java|PID'`
+    echo -e "\n>>> ps axu | grep -v 'grep' | egrep 'java|PID'"
     echo -e "$PJ"
 
     if [[ "x" == "x$PJ" ]];then
