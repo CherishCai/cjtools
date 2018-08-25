@@ -93,7 +93,7 @@ jmapHisto(){
 }
 
 needFullGC(){
-    echo ""
+    echo -e "#######\n"
     echo -e "\033[31mBelow cmd need full GC, do it if you need!\033[0m"
 
     JMAP_HISTO_LIVE_LOG=jmap_histo_live-${PID}-${DATE}.log
@@ -101,6 +101,9 @@ needFullGC(){
 
     JMAP_DUMP_FILE=jmap_dump_live-${PID}-${DATE}.bin
     echo "jmap -dump:live,format=b,file=${JMAP_DUMP_FILE} $PID"
+
+    echo -e "\n#######\n"
+
 }
 
 suggest(){
@@ -158,7 +161,6 @@ main(){
         jmapHisto
         jmapHeap
 
-        needFullGC
     fi
 
     echo ""
