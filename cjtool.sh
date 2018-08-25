@@ -71,7 +71,7 @@ jmapHeap(){
     #jmap -heap
     echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') Begin to process jmap -heap."
     JMAP_HEAP_LOG=jmap_heap-${PID}-${DATE}.log
-    jmap -heap $PID > ${JMAP_HEAP_LOG}
+    jmap -heap $PID 1>${JMAP_HEAP_LOG} 2>&1
     if [[ $? != 0 ]]; then
       echo -e "\033[31mprocess jmap -heap error.\033[0m"
     fi
