@@ -107,8 +107,10 @@ needFullGC(){
 }
 
 suggest(){
-    echo ""
-    echo " suggest maybe !"
+    echo -e "\nSuggest maybe!\n"
+    echo -e "jstat -gcutil $PID 1000 10"
+    echo -e "sar"
+    echo -e "dmesg | grep oom"
     echo ""
 }
 
@@ -160,9 +162,9 @@ main(){
         
         jmapHisto
         jmapHeap
-
     fi
 
+    suggest
     echo ""
     echo "End cjvmtools.sh"
 }
