@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 DATE=$(date "+%Y%m%d%H%M%S")
 SLEEP_TIME=1
 
