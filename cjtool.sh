@@ -15,8 +15,7 @@ JSTACK_LOG="/tmp/jstack-${PID}-${DATE}.jstack"
 
 psjava(){
     PJ=`ps axu | grep -v grep | grep java`
-    echo ""
-    echo ">>> ps axu | grep -v grep | grep java"
+    echo -e "\n>>> ps axu | grep -v grep | grep java"
     echo -e "$PJ"
 
     if [[ "x" == "x$PJ" ]];then
@@ -28,11 +27,10 @@ psjava(){
 topPid(){
     TP_LOG=top_Hp-${PID}-${DATE}.log
     TP=`top -n 1 -Hp $PID`
-    echo ""
-    echo ">>> top -Hp $PID"
+    echo -e "\n>>> top -Hp $PID"
     echo -e "$TP"
-    echo "Write (top -Hp $PID) msg into $TP_LOG\n"
-    echo  -e "$TP" > $TP_LOG
+    echo -e "Write (top -Hp $PID) msg into $TP_LOG\n"
+    echo -e "$TP" > $TP_LOG
 }
 
 jstackPid(){
@@ -53,9 +51,9 @@ freeCmd(){
     FREE=`free -m`
     echo ""
     echo ">>> free -m"
-    echo  -e "$FREE"
-    echo "Write (free -m) msg into $FREE_LOG\n"
-    echo  -e "$FREE" > $FREE_LOG
+    echo -e "$FREE"
+    echo -e "Write (free -m) msg into $FREE_LOG\n"
+    echo -e "$FREE" > $FREE_LOG
 }
 
 jinfoFlags(){
@@ -111,11 +109,9 @@ suggest(){
 
 pidAndChoice(){
     while [[ "x" == "x$PID" ]]; do
+        # do ps java
+        psjava
         read -p "Please enter PID:" PID
-        if [[ "x" == "x$PID" ]]; then
-            # do ps java
-            psjava
-        fi
     done
 
     echo ""
